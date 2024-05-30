@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: multple-datasource
+multiple:
+  datasource:
+      - url: jdbc:mysql://192.168.100.1:13306/fake
+        username: fake
+        password: fake
+        # ???????????
+        name: a
+      - url: jdbc:mysql://192.168.100.1:13306/fake
+        username: fake
+        password: fake
+        name: b
