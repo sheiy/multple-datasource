@@ -1,6 +1,6 @@
 package site.ownw.multpledatasource.core;
 
-abstract class MultipleDatasourceContext {
+public abstract class MultipleDatasourceContext {
 
     private static final ThreadLocal<String> DATA_SOURCE_NAME = new ThreadLocal<>();
 
