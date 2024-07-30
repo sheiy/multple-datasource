@@ -2,10 +2,10 @@ package site.ownw.multpledatasource.config;
 
 import javax.sql.DataSource;
 import org.aopalliance.intercept.Interceptor;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.aop.Advisor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +15,10 @@ import site.ownw.multpledatasource.core.DBSourceAdvisor;
 import site.ownw.multpledatasource.core.DBSourceInterceptor;
 import site.ownw.multpledatasource.core.MultipleDatasource;
 
+@ConditionalOnClass(DataSource.class)
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MultipleDatasourceProperties.class)
-@AutoConfiguration(before = {DataSourceAutoConfiguration.class, MybatisAutoConfiguration.class})
+@AutoConfiguration(before = {DataSourceAutoConfiguration.class})
 public class MultipleDatasourceConfiguration {
 
     @Bean
