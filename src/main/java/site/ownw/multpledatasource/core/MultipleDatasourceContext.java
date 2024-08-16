@@ -1,18 +1,33 @@
 package site.ownw.multpledatasource.core;
 
+import org.springframework.util.CollectionUtils;
+
+import java.util.Stack;
+
 public abstract class MultipleDatasourceContext {
 
-    private static final ThreadLocal<String> DATA_SOURCE_NAME = new ThreadLocal<>();
+    private static final ThreadLocal<Stack<String>> DATA_SOURCE_NAME = new ThreadLocal<>();
 
     public static String getCurrentDataSourceName() {
-        return DATA_SOURCE_NAME.get();
+        if (CollectionUtils.isEmpty(DATA_SOURCE_NAME.get())) {
+            return null;
+        }
+        return DATA_SOURCE_NAME.get().getLast();
     }
 
     public static void setCurrentDataSourceName(String dataSourceName) {
-        DATA_SOURCE_NAME.set(dataSourceName);
+        if (CollectionUtils.isEmpty(DATA_SOURCE_NAME.get())) {
+            DATA_SOURCE_NAME.set(new Stack<>());
+        }
+        DATA_SOURCE_NAME.get().push(dataSourceName);
     }
 
     public static void clearCurrentDataSourceName() {
-        DATA_SOURCE_NAME.remove();
+        if (!CollectionUtils.isEmpty(DATA_SOURCE_NAME.get())) {
+            DATA_SOURCE_NAME.get().pop();
+        }
+        if (CollectionUtils.isEmpty(DATA_SOURCE_NAME.get())) {
+            DATA_SOURCE_NAME.remove();
+        }
     }
 }
